@@ -1,9 +1,9 @@
-using System;
-using System.Linq;
+﻿using System.Linq;
 using Android.App;
 #if ANDROIDX
 using AndroidX.AppCompat.App;
 using AppCompatAlertDialog = AndroidX.AppCompat.App.AlertDialog;
+using Google.Android.Material.Dialog;
 #else
 using Android.Support.V7.App;
 using AppCompatAlertDialog = Android.Support.V7.App.AlertDialog;
@@ -52,7 +52,11 @@ namespace Acr.UserDialogs.Builders
 
         public Dialog Build(AppCompatActivity activity, ActionSheetConfig config)
         {
+#if ANDROIDX
+            var dlg = new MaterialAlertDialogBuilder(activity, config.AndroidStyleId ?? 0)
+#else
             var dlg = new AppCompatAlertDialog.Builder(activity, config.AndroidStyleId ?? 0)
+#endif
                 .SetTitle(config.Title);
             //.SetCustomTitle(new TextView(activity) {
             //    Text = config.Title,

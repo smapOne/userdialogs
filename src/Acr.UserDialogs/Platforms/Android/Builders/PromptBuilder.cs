@@ -9,7 +9,8 @@ using Android.Widget;
 using AlertDialog = Android.App.AlertDialog;
 #if ANDROIDX
 using AndroidX.AppCompat.App;
-using AppCompatAlertDialog = AndroidX.AppCompat.App.AlertDialog;
+using AppCompatAlertDialog =  AndroidX.AppCompat.App.AlertDialog;
+using Google.Android.Material.Dialog;
 #else
 using Android.Support.V7.App;
 using AppCompatAlertDialog = Android.Support.V7.App.AlertDialog;
@@ -77,7 +78,11 @@ namespace Acr.UserDialogs.Builders
 
             SetInputType(txt, config.InputType);
 
+#if ANDROIDX
+            var builder = new MaterialAlertDialogBuilder(activity, config.AndroidStyleId ?? 0)
+#else
             var builder = new AppCompatAlertDialog.Builder(activity, config.AndroidStyleId ?? 0)
+#endif
                 .SetCancelable(false)
                 .SetMessage(config.Message)
                 .SetTitle(config.Title)

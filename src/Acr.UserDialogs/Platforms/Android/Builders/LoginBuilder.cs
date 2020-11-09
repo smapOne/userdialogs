@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Android.App;
 using Android.Text;
 using Android.Views;
@@ -7,6 +7,7 @@ using AlertDialog = Android.App.AlertDialog;
 #if ANDROIDX
 using AndroidX.AppCompat.App;
 using AppCompatAlertDialog = AndroidX.AppCompat.App.AlertDialog;
+using Google.Android.Material.Dialog;
 #else
 using Android.Support.V7.App;
 using AppCompatAlertDialog = Android.Support.V7.App.AlertDialog;
@@ -88,7 +89,11 @@ namespace Acr.UserDialogs.Builders
             layout.AddView(txtUser, ViewGroup.LayoutParams.MatchParent);
             layout.AddView(txtPass, ViewGroup.LayoutParams.MatchParent);
 
+#if ANDROIDX
+            return new MaterialAlertDialogBuilder(activity, config.AndroidStyleId ?? 0)
+#else
             return new AppCompatAlertDialog.Builder(activity, config.AndroidStyleId ?? 0)
+#endif
                 .SetCancelable(false)
                 .SetTitle(config.Title)
                 .SetMessage(config.Message)
