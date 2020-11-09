@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Globalization;
+using Android;
 using Android.App;
 using Android.Content;
 using Android.Text;
 using Android.Text.Method;
+using Android.Util;
 using Android.Views.InputMethods;
 using Android.Widget;
 using AlertDialog = Android.App.AlertDialog;
@@ -55,6 +57,12 @@ namespace Acr.UserDialogs.Builders
                 );
             }
             var dialog = builder.Create();
+
+            var typedValue = new TypedValue();
+            activity.Theme?.ResolveAttribute(Resource.Attribute.dialogPreferredPadding, typedValue, true);
+            var dialogPreferredPadding = typedValue.GetDimension(activity.Resources!.DisplayMetrics);
+            dialog?.SetView(txt, (int) dialogPreferredPadding, 0, (int)dialogPreferredPadding, 0);
+
             this.HookTextChanged(dialog, txt, config);
 
             return dialog;
@@ -98,6 +106,12 @@ namespace Acr.UserDialogs.Builders
                 );
             }
             var dialog = builder.Create();
+
+            var typedValue = new TypedValue();
+            activity.Theme?.ResolveAttribute(Resource.Attribute.dialogPreferredPadding, typedValue, true);
+            var dialogPreferredPadding = typedValue.GetDimension(activity.Resources!.DisplayMetrics);
+            dialog?.SetView(txt, (int) dialogPreferredPadding, 0, (int)dialogPreferredPadding, 0);
+
             this.HookTextChanged(dialog, txt, config);
 
             return dialog;
